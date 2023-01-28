@@ -12,16 +12,18 @@ const camera = new THREE.PerspectiveCamera(
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+
+// initialize font loader and startTime
 let loader = new FontLoader();
 let startTime = performance.now();
 
 let stars, starGeo;
 let starMaterial;
 
-let textMesh = new THREE.Mesh();
+// text mesh string
 let fName = "Guillan";
 
-let elapsedTime = (performance.now() - startTime);
+let elapsedTime = (performance.now() - startTime); // store the start time of the program to "elapsedTime"
 
 lighting();
 particles();
@@ -53,6 +55,8 @@ function particles() {
 }
 
 function animateParticles() {
+  // checks if the y position of the "stars" are less than -200 y level.
+  // returns to 200 y level if true
     if(stars.position.y < -200)
       stars.position.y = 200
     
@@ -73,11 +77,10 @@ loader.load( './assets/fonts/gentilis_regular.typeface.json', function ( font ) 
     bevelSegments: 3
   } );
   let textMaterial = new THREE.MeshNormalMaterial();
-  textMesh = new THREE.Mesh(textGeometry,textMaterial);
+  let textMesh = new THREE.Mesh(textGeometry,textMaterial);
   scene.add(textMesh);
   textMesh.position.set(0,.5,0)
-  console.log("TEXT LOADED SUCCESS!\n\nText String: " + fName)
-  
+  console.log("TEXT LOADED SUCCESS!\n\nText String: " + fName) // used to check if code block is working
 } );
 
 function lighting() {
@@ -108,9 +111,6 @@ function animate() {
     starMaterial.color.setHex(Math.random() * 0xffffff); // set random hex colors to "starMaterial".
     console.log("\n\n\n COLOR CHANGE!!! \n\n\n")
   }
-
-  textMesh.rotation.X += 5;
-  textMesh.rotation.Y += 5;
 
   console.log("Elapsed time: " + elapsedSeconds + " sec");
   renderer.render(scene, camera);
